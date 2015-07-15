@@ -1,0 +1,36 @@
+Assignment #2: Maze Traversal
+You are to solve the extended maze traversal problem discussed in class.  The format of a maze file is given below. For this assignment, assume that the starting point is row 0, column 0 (the top-left square), and the ending point is the last row, last column. Each instance will have a (non-negative) wall-knocking penalty (see below). For each file/penalty pair, print the cost of the shortest path, and its description.
+
+Maze File
+The first line contains the number of rows and columns. Each subsequent line represents a square and possible walls: N for northern wall, S for southern wall, E for eastern wall, W for western wall. An eastern wall for square (i,j) implies a western wall for square (i,j+1) (if square (i,j+1) exists), whether or not square (i,j+1) explicity says so, and so on for other directions. Any square in row zero automatically has a northern wall; similarly for other squares on the border, except for the starting and ending points. Each square may list several walls (or possibly no walls); the directions can be in any order, and the squares can be in any order. Example of an input file with a couple of redundant walls:
+
+4 4 
+0 0 S
+0 1 E
+0 2 W
+1 0 NS
+1 2 ES
+2 1 N
+3 1 W
+3 2 N
+3 3 N
+
+For this maze the shortest path is 13 squares, and the path is given by the directions ESENESSWWSEE. (In other words, go east, then south, then east, etc. Once you have numbered the maze squares by Dijkstra's algorithm discussed in class, printing out the path is simple if you use recursion.
+
+Needless to say, you should catch any ill-formatted lines in the input file and skip them after a printing a warning message.
+
+Wall Knocking
+In this assignment, you are allowed to knock down walls. Knocking down a wall incurs a penalty P for each wall knocked down that will be specified by the user. Because walls may be knocked down, you are guaranteed that a path exists. Print the length of the shortest path (the length includes penalties for knocking down walls) and the sequence of steps taken to reach it. Also mention how many walls are knocked down.
+
+Observe that if the penalty is 0, then you may knock down walls with impunity, and the shortest path is trivial. If the penalty exceeds the number of squares in the maze, then the shortest path is the path that knocks down the fewest number of walls. For most of the mazes, that you will be testing, this means the shortest path with no walls knocked down. For one of the mazes, this means knocking down one wall. Most interesting is when the penalty is a small number, such as 15. In this case, for any interesting maze, you'll be hard pressed to figure out the solution without the use of a computer.
+
+Algorithm
+The algorithm you will use is Dijkstra's algorithm. Because the Collections API includes a priority queue starting in Java 1.5, which is essential for an efficient implementation, you must use the Java 1.5 PriorityQueue class.
+
+Input
+You will provide both the set of penalties and the file names as command line arguments as follows:
+
+java Assign2 -p 0 5 10 15 -f maze1.txt maze2.txt maze3.txt
+
+Here there are 4 penalties paired with 3 input files for a total of 12 separate runs. Things will likely be faster if you read each file and then run with all the penalties prior to proceeding to the next file. I will provide the actual penalties and files separately.
+
